@@ -67,9 +67,15 @@ class _ShopState extends State<Shop> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.favorite_border,
+                          onPressed: () {
+                            setState(() {
+                              product.toggleIsFavorite();
+                            });
+                          },
+                          icon: Icon(
+                            product.isFavorite
+                                ? Icons.favorite
+                                : Icons.favorite_border,
                             color: Colors.white,
                           )),
                       Text(product.name,
