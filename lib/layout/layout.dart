@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 class Layout extends StatelessWidget {
   final Widget child;
   final String title;
+  final List<Widget>? actions;
 
   const Layout({
     super.key,
     required this.child,
     required this.title,
+    this.actions,
   });
 
   @override
@@ -39,6 +41,7 @@ class Layout extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
         backgroundColor: Colors.yellow,
+        actions: actions,
       ),
       body: child,
     );
