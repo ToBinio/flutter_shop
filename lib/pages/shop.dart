@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/layout/layout.dart';
+import 'package:flutter_shop/pages/product.dart';
 import 'package:flutter_shop/provider/product_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -15,45 +17,9 @@ class _ShopState extends State<Shop> {
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductProvider>(context);
 
-    return Scaffold(
-      drawer: Drawer(
-        child: Column(children: [
-          TextButton(
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.black,
-              ),
-              onPressed: () => {},
-              child: const Row(
-                children: [
-                  Icon(Icons.place),
-                  Text(
-                    "Shop",
-                  )
-                ],
-              )),
-          TextButton(
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.black,
-              ),
-              onPressed: () => {},
-              child: const Row(
-                children: [Icon(Icons.place), Text("Orders")],
-              )),
-          TextButton(
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.black,
-              ),
-              onPressed: () => {},
-              child: const Row(
-                children: [Icon(Icons.place), Text("Manage Products")],
-              ))
-        ]), // Populate the Drawer in the next step.
-      ),
-      appBar: AppBar(
-        title: const Text("Products"),
-        backgroundColor: Colors.yellow,
-      ),
-      body: GridView.count(crossAxisCount: 2, children: [
+    return Layout(
+      title: 'Shop',
+      child: GridView.count(crossAxisCount: 2, children: [
         for (var product in productProvider.products)
           Container(
             margin: const EdgeInsets.all(5),
@@ -81,7 +47,14 @@ class _ShopState extends State<Shop> {
                       Text(product.name,
                           style: const TextStyle(color: Colors.white)),
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Product(product: product),
+                              ),
+                            );
+                          },
                           icon: const Icon(Icons.shopping_bag_outlined,
                               color: Colors.white)),
                     ]),

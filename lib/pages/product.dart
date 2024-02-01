@@ -1,15 +1,25 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_shop/product/productData.dart';
 
-class Product extends StatefulWidget {
-  const Product({super.key});
+class Product extends StatelessWidget {
+  final ProductData product;
 
-  @override
-  State<Product> createState() => _ProductState();
-}
+  const Product({super.key, required this.product});
 
-class _ProductState extends State<Product> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(product.name),
+        backgroundColor: Colors.yellow,
+      ),
+      body: Column(
+        children: [
+          Image.network(product.imagePath),
+          Text("price ${product.price}")
+        ],
+      ),
+    );
   }
 }

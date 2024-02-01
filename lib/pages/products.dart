@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_shop/layout/layout.dart';
 
 class Products extends StatefulWidget {
   const Products({super.key});
@@ -10,6 +11,9 @@ class Products extends StatefulWidget {
 class _ProductsState extends State<Products> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Layout(
+      title: "Prodcuts",
+      child: Text("Products"),
+    );
   }
 }
