@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_shop/layout/layout.dart';
 import 'package:flutter_shop/pages/product.dart';
 import 'package:flutter_shop/provider/product_provider.dart';
+import 'package:flutter_shop/provider/shopping_cart_provider.dart';
 import 'package:provider/provider.dart';
 
 class Shop extends StatefulWidget {
@@ -13,19 +14,37 @@ class Shop extends StatefulWidget {
 }
 
 class _ShopState extends State<Shop> {
+  bool showOnlyFavorite = false;
+
   @override
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductProvider>(context);
+    final shoppingCartProvider = Provider.of<ShoppingCartProvider>(context);
 
     return Layout(
       title: 'Shop',
       actions: [
+        PopupMenuButton(
+          onSelected: (value) {
+            setState(() {
+              showOnlyFavorite = value;
+            });
+          },
+          itemBuilder: (context) {
+            return [
+              const PopupMenuItem<bool>(
+                  value: true, child: Text("only favorites")),
+              const PopupMenuItem<bool>(value: false, child: Text("all"))
+            ];
+          },
+        ),
         IconButton(
             onPressed: () => {Navigator.pushNamed(context, "/shop/cart")},
             icon: const Icon(Icons.shopping_cart))
       ],
       child: GridView.count(crossAxisCount: 2, children: [
-        for (var product in productProvider.products)
+        for (var product in productProvider.products
+            .where((product) => !showOnlyFavorite || product.isFavorite))
           Container(
             margin: const EdgeInsets.all(5),
             child: GestureDetector(
@@ -61,7 +80,9 @@ class _ShopState extends State<Shop> {
                         Text(product.name,
                             style: const TextStyle(color: Colors.white)),
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              shoppingCartProvider.buy(product);
+                            },
                             icon: const Icon(Icons.shopping_bag_outlined,
                                 color: Colors.white)),
                       ]),
