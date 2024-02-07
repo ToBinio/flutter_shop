@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import '../product/productData.dart';
 
 class ShoppingCartProvider extends ChangeNotifier {
-  final HashMap<ProductData, int> _products = HashMap();
+  HashMap<ProductData, int> _products = HashMap();
 
   ShoppingCartProvider();
 
@@ -15,6 +15,10 @@ class ShoppingCartProvider extends ChangeNotifier {
     _products[product] = _products[product]! + 1;
 
     notifyListeners();
+  }
+
+  void clear() {
+    _products = HashMap();
   }
 
   HashMap<ProductData, int> get products => _products;

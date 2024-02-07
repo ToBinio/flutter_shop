@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/provider/order_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/shopping_cart_provider.dart';
@@ -15,6 +16,7 @@ class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
     final shoppingCartProvider = Provider.of<ShoppingCartProvider>(context);
+    final orderProvider = Provider.of<OrderProvider>(context);
 
     double total = 0;
     if (shoppingCartProvider.products.isNotEmpty) {
@@ -28,6 +30,15 @@ class _CartState extends State<Cart> {
       body: ListView(children: [
         ListTile(
           title: Text("Total $total\$"),
+          trailing: IconButton(
+            icon: const Icon(Icons.payment),
+            onPressed: () {
+              setState(() {
+                orderProvider.order(shoppingCartProvider.products);
+                shoppingCartProvider.clear();
+              });
+            },
+          ),
         ),
         for (var product in shoppingCartProvider.products.entries)
           Dismissible(
