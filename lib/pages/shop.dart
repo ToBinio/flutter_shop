@@ -81,6 +81,15 @@ class _ShopState extends State<Shop> {
                             style: const TextStyle(color: Colors.white)),
                         IconButton(
                             onPressed: () {
+                              ScaffoldMessenger.of(context)
+                                  .hideCurrentSnackBar();
+
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text(
+                                    "added ${product.name} to the shopping cart"),
+                              ));
+
                               shoppingCartProvider.buy(product);
                             },
                             icon: const Icon(Icons.shopping_bag_outlined,

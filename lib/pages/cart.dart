@@ -16,20 +16,47 @@ class _CartState extends State<Cart> {
   Widget build(BuildContext context) {
     final shoppingCartProvider = Provider.of<ShoppingCartProvider>(context);
 
+    double total = 0;
+    if (shoppingCartProvider.products.isNotEmpty) {
+      total = shoppingCartProvider.products.entries
+          .map((product) => product.value * product.key.price)
+          .reduce((value, element) => value + element);
+    }
+
     return Scaffold(
       appBar: AppBar(title: const Text("Shopping char")),
       body: ListView(children: [
-        ListTile(title: Text("Total"),),
+        ListTile(
+          title: Text("Total $total\$"),
+        ),
         for (var product in shoppingCartProvider.products.entries)
-          ListTile(
-            leading: Text("${product.key.price}\$"),
-            title: Column(
-              children: [
-                Text(product.key.name),
-                Text("${product.key.price * product.value}\$"),
-              ],
+          Dismissible(
+            key: Key(product.key.name),
+            direction: DismissDirection.endToStart,
+            onDismissed: (direction) {
+              setState(() {
+                shoppingCartProvider.products.remove(product.key);
+              });
+            },
+            background: Container(
+              color: Colors.red,
+              alignment: Alignment.centerRight,
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: const Icon(
+                Icons.delete,
+                color: Colors.white,
+              ),
             ),
-            trailing: Text("${product.value}"),
+            child: ListTile(
+              leading: Text("${product.key.price}\$"),
+              title: Column(
+                children: [
+                  Text(product.key.name),
+                  Text("${product.key.price * product.value}\$"),
+                ],
+              ),
+              trailing: Text("${product.value}"),
+            ),
           )
       ]),
     );
