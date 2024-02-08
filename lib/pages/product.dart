@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_shop/product/productData.dart';
+import 'package:flutter_shop/product/product_data.dart';
 
 class Product extends StatelessWidget {
   final ProductData product;

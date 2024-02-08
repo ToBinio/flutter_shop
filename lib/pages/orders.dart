@@ -6,7 +6,7 @@ import 'package:flutter_shop/provider/order_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../layout/layout.dart';
-import '../product/productData.dart';
+import '../product/product_data.dart';
 
 class Orders extends StatefulWidget {
   const Orders({super.key});
@@ -22,7 +22,7 @@ class _OrdersState extends State<Orders> {
 
     return Layout(
         title: "Orders",
-        child: Column(
+        child: ListView(
           children: [
             for (var order in productProvider.orders) displayOrder(order)
           ],
