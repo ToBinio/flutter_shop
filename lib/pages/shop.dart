@@ -88,6 +88,7 @@ class _ShopState extends State<Shop> {
                             onPressed: () {
                               var snackBar = SnackBar(
                                 content: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Text(
                                         "added ${product.name} to the shopping cart"),

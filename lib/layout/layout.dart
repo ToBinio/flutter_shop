@@ -20,19 +20,19 @@ class Layout extends StatelessWidget {
         child: Column(children: [
           ListTile(
             title: const Row(
-              children: [Icon(Icons.place), Text("Shop")],
+              children: [Icon(Icons.shop), Text("Shop")],
             ),
             onTap: () => {Navigator.pushNamed(context, "/shop")},
           ),
           ListTile(
             title: const Row(
-              children: [Icon(Icons.place), Text("Orders")],
+              children: [Icon(Icons.shopping_cart), Text("Orders")],
             ),
             onTap: () => {Navigator.pushNamed(context, "/orders")},
           ),
           ListTile(
             title: const Row(
-              children: [Icon(Icons.place), Text("Manage Products")],
+              children: [Icon(Icons.edit), Text("Manage Products")],
             ),
             onTap: () => {Navigator.pushNamed(context, "/products")},
           ),

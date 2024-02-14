@@ -36,14 +36,14 @@ class _OrdersState extends State<Orders> {
         .reduce((value, element) => value + element);
 
     return ExpansionTile(
-      leading: Text("Total: $total"),
-      title: Text(order.date.toString()),
+      title: Text("Total: $total\$"),
+      subtitle: Text(order.date.toString()),
       children: [
         for (var product in order.products.entries)
           ListTile(
             leading: Image.network(product.key.imagePath),
             title: Text("${product.key.name} x${product.value}"),
-            trailing: Text("${product.value * product.key.price}"),
+            trailing: Text("${product.value * product.key.price}\$"),
           )
       ],
     );

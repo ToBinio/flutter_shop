@@ -20,23 +20,45 @@ class _ProductsState extends State<Products> {
 
     return Layout(
       title: "Prodcuts",
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductEdit(null,"add Product"),
+              ),
+            );
+          },
+        )
+      ],
       child: ListView(children: [
-        for (var (index, product) in productProvider.products.indexed)
+        for (var product in productProvider.products)
           ListTile(
-            onTap: () => {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProductEdit(index),
-                ),
-              )
-            },
+            leading: Image.network(product.imagePath),
             title: Text(product.name),
-            trailing: IconButton(
-              icon: const Icon(Icons.delete_forever_outlined),
-              onPressed: () {
-                productProvider.delete(product);
-              },
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.edit),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProductEdit(product,"edit Product"),
+                      ),
+                    );
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.delete_forever_outlined),
+                  onPressed: () {
+                    productProvider.delete(product);
+                  },
+                ),
+              ],
             ),
           )
       ]),

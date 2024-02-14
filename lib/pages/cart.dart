@@ -27,7 +27,8 @@ class _CartState extends State<Cart> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Shopping char")),
+      appBar: AppBar(
+          backgroundColor: Colors.yellow, title: const Text("Shopping char")),
       body: ListView(children: [
         ListTile(
           title: Text("Total $total\$"),
@@ -74,10 +75,10 @@ class _CartState extends State<Cart> {
               title: Column(
                 children: [
                   Text(product.key.name),
-                  Text("${product.key.price * product.value}\$"),
+                  Text("Total ${product.key.price * product.value}\$"),
                 ],
               ),
-              trailing: Text("${product.value}"),
+              trailing: Text("${product.value}x"),
             ),
           )
       ]),
