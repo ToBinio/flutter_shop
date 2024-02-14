@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/order/order_data.dart';
 import 'package:flutter_shop/provider/order_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -33,10 +34,12 @@ class _CartState extends State<Cart> {
           trailing: IconButton(
             icon: const Icon(Icons.payment),
             onPressed: () {
-              setState(() {
-                orderProvider.order(shoppingCartProvider.products);
-                shoppingCartProvider.clear();
-              });
+              if (shoppingCartProvider.products.isNotEmpty) {
+                setState(() {
+                  orderProvider.order(OrderData(shoppingCartProvider.products));
+                  shoppingCartProvider.clear();
+                });
+              }
             },
           ),
         ),
@@ -59,7 +62,15 @@ class _CartState extends State<Cart> {
               ),
             ),
             child: ListTile(
-              leading: Text("${product.key.price}\$"),
+              leading: SizedBox(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.network(product.key.imagePath),
+                    Text("${product.key.price}\$"),
+                  ],
+                ),
+              ),
               title: Column(
                 children: [
                   Text(product.key.name),

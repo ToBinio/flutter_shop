@@ -14,10 +14,11 @@ class Product extends StatelessWidget {
         title: Text(product.name),
         backgroundColor: Colors.yellow,
       ),
-      body: Column(
+      body: ListView(
         children: [
-          Image.network(product.imagePath),
-          Text("price ${product.price}")
+          Center(child: Image.network(product.imagePath)),
+          Center(child: Text(product.description)),
+          Center(child: Text("price ${product.price}"))
         ],
       ),
     );

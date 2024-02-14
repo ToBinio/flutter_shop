@@ -17,8 +17,22 @@ class ShoppingCartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void undo(ProductData product) {
+    _products.putIfAbsent(product, () => 0);
+
+    _products[product] = _products[product]! - 1;
+
+    if (products[product]! <= 0) {
+      products.remove(product);
+    }
+
+    notifyListeners();
+  }
+
   void clear() {
     _products = HashMap();
+
+    notifyListeners();
   }
 
   HashMap<ProductData, int> get products => _products;

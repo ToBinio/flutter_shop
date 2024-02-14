@@ -32,6 +32,12 @@ class _ProductsState extends State<Products> {
               )
             },
             title: Text(product.name),
+            trailing: IconButton(
+              icon: const Icon(Icons.delete_forever_outlined),
+              onPressed: () {
+                productProvider.delete(product);
+              },
+            ),
           )
       ]),
     );

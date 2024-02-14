@@ -21,6 +21,13 @@ class _ShopState extends State<Shop> {
     final productProvider = Provider.of<ProductProvider>(context);
     final shoppingCartProvider = Provider.of<ShoppingCartProvider>(context);
 
+    int itemsInShoppingCart = 0;
+    if (shoppingCartProvider.products.isNotEmpty) {
+      itemsInShoppingCart = shoppingCartProvider.products.entries
+          .map((e) => e.value)
+          .reduce((value, element) => value + element);
+    }
+
     return Layout(
       title: 'Shop',
       actions: [
@@ -38,9 +45,7 @@ class _ShopState extends State<Shop> {
             ];
           },
         ),
-        IconButton(
-            onPressed: () => {Navigator.pushNamed(context, "/shop/cart")},
-            icon: const Icon(Icons.shopping_cart))
+        buildIconWithBadge(itemsInShoppingCart)
       ],
       child: GridView.count(crossAxisCount: 2, children: [
         for (var product in productProvider.products
@@ -81,14 +86,24 @@ class _ShopState extends State<Shop> {
                             style: const TextStyle(color: Colors.white)),
                         IconButton(
                             onPressed: () {
-                              ScaffoldMessenger.of(context)
-                                  .hideCurrentSnackBar();
+                              var snackBar = SnackBar(
+                                content: Row(
+                                  children: [
+                                    Text(
+                                        "added ${product.name} to the shopping cart"),
+                                    TextButton(
+                                        onPressed: () {
+                                          shoppingCartProvider.undo(product);
+                                          ScaffoldMessenger.of(context)
+                                              .hideCurrentSnackBar();
+                                        },
+                                        child: const Text("undo"))
+                                  ],
+                                ),
+                              );
 
                               ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text(
-                                    "added ${product.name} to the shopping cart"),
-                              ));
+                                  .showSnackBar(snackBar);
 
                               shoppingCartProvider.buy(product);
                             },
@@ -101,6 +116,37 @@ class _ShopState extends State<Shop> {
             ),
           )
       ]),
+    );
+  }
+
+  Widget buildIconWithBadge(int badgeNumber) {
+    return Stack(
+      children: [
+        IconButton(
+          icon: const Icon(Icons.shopping_cart),
+          onPressed: () {
+            Navigator.pushNamed(context, "/shop/cart");
+          },
+        ),
+        Positioned(
+          right: 5,
+          top: 0,
+          child: Container(
+            padding: const EdgeInsets.all(4),
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.orange, // Choose your desired color
+            ),
+            child: Text(
+              badgeNumber.toString(),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

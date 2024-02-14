@@ -48,6 +48,14 @@ class _ProductEditState extends State<ProductEdit> {
                 product.imagePath = value;
               });
             },
+          ),
+          Text("current description: ${product.description}"),
+          TextField(
+            onSubmitted: (value) {
+              setState(() {
+                product.description = value;
+              });
+            },
           )
         ],
       ),

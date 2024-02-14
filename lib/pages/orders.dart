@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/order/order_data.dart';
 import 'package:flutter_shop/provider/order_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -29,15 +30,16 @@ class _OrdersState extends State<Orders> {
         ));
   }
 
-  Widget displayOrder(HashMap<ProductData, int> order) {
-    double total = order.entries
+  Widget displayOrder(OrderData order) {
+    double total = order.products.entries
         .map((product) => product.value * product.key.price)
         .reduce((value, element) => value + element);
 
     return ExpansionTile(
-      title: Text("Total: $total"),
+      leading: Text("Total: $total"),
+      title: Text(order.date.toString()),
       children: [
-        for (var product in order.entries)
+        for (var product in order.products.entries)
           ListTile(
             leading: Image.network(product.key.imagePath),
             title: Text("${product.key.name} x${product.value}"),
